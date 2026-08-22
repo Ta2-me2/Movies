@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+:root {
+  /* Width of the area taken by the sidebar and the content gutter (Apple TV-like) */
+  --sidebar-w: 240px;
+  --gutter-l: 292px;
+  --gutter-r: 44px;
+  --bg: #0f0f0f;
+  --ease-soft: cubic-bezier(0.25, 1, 0.5, 1);
+  color-scheme: dark;
+
+  /* ---------------------------------------------------------------------
+     Design tokens. One vocabulary for the whole app, the way a native app
+     keeps its Palette/Metrics in one place instead of inventing numbers
+     per screen.
+     --------------------------------------------------------------------- */
+
+  /* Accent. This WebKit understands none of the CSS system-accent keywords
+     (AccentColor / -apple-system-*), and a custom property would swallow them
+     as "valid" tokens anyway — so the real accent is read from AppKit at
+     startup and written over this value. macOS systemBlue is the standby. */
+  --accent: #0a84ff;
+
+  /* Text tiers (primary / secondary / tertiary, as in AppKit) */
+  --text-1: rgba(255, 255, 255, 0.96);
+  --text-2: rgba(255, 255, 255, 0.62);
+  --text-3: rgba(255, 255, 255, 0.38);
+
+  /* Hairlines and quiet fills — separation without shadows */
+  --hairline: rgba(255, 255, 255, 0.09);
+  --hairline-strong: rgba(255, 255, 255, 0.14);
+  --fill-subtle: rgba(255, 255, 255, 0.06);
+  --fill: rgba(255, 255, 255, 0.1);
+  --fill-emphasis: rgba(255, 255, 255, 0.16);
+
+  /* Vibrancy. Real macOS materials do not just blur — they boost the
+     saturation of whatever sits behind them, which is what keeps a
+     translucent panel looking alive rather than like frosted plastic. */
+  --vibrancy: blur(48px) saturate(190%);
+  --vibrancy-thin: blur(24px) saturate(180%);
+
+  /* Radii — continuous-looking corners, consistent across the app */
+  --r-card: 10px;
+  --r-panel: 12px;
+  --r-small: 6px;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", Arial, sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+  /* keep horizontal trackpad swipes inside carousels from triggering history navigation */
+  overscroll-behavior-x: none;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* ------------------------------- Materials -------------------------------
+   Each one mirrors an NSVisualEffectView material: a tint, real vibrancy,
+   and a hairline edge instead of a heavy shadow.
+   ------------------------------------------------------------------------- */
+
+/* Sidebar material — sits over app content and picks up its colour */
+.mat-sidebar {
+  background: rgba(22, 22, 24, 0.62);
+  backdrop-filter: var(--vibrancy);
+  -webkit-backdrop-filter: var(--vibrancy);
+  box-shadow:
+    inset 0 0 0 0.5px var(--hairline),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.07),
+    0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Popover / menu material */
+.mat-popover {
+  background: rgba(38, 38, 41, 0.82);
+  backdrop-filter: var(--vibrancy);
+  -webkit-backdrop-filter: var(--vibrancy);
+  box-shadow:
+    inset 0 0 0 0.5px var(--hairline-strong),
+    0 12px 34px rgba(0, 0, 0, 0.5);
+}
+
+/* Sheet / dialog material */
+.mat-sheet {
+  background: rgba(30, 30, 32, 0.92);
+  backdrop-filter: var(--vibrancy);
+  -webkit-backdrop-filter: var(--vibrancy);
+  box-shadow:
+    inset 0 0 0 0.5px var(--hairline-strong),
+    0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
+/* HUD control over video (mute, fullscreen, back) */
+.mat-hud {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: var(--vibrancy-thin);
+  -webkit-backdrop-filter: var(--vibrancy-thin);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+}
+
+/* Quiet control fill used by pills, fields and secondary buttons */
+.mat-control {
+  background: var(--fill);
+  box-shadow: inset 0 0 0 0.5px var(--hairline);
+}
+
+/* Native macOS feel: UI text is not selectable, default cursor */
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+button {
+  cursor: default;
+}
+
+/* Native-style focus ring: the accent colour, drawn outside the control */
+.focus-ring:focus-visible,
+.focus-ring:has(:focus-visible) {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 0.5px var(--hairline),
+    0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Thin dark scrollbar for modal windows */
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.thin-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --------------------------- Player sliders ----------------------------- */
+
+.player-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  outline: none;
+  cursor: default;
+}
+.player-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ------------------------------ Animations ------------------------------ */
+
+@keyframes k-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes k-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes k-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* page/content entrance */
+.anim-page {
+  animation: k-fade-up 0.4s var(--ease-soft) both;
+}
+/* single element entrance (cards appearing in search, hero text) */
+.anim-in {
+  animation: k-fade-up 0.32s var(--ease-soft) both;
+}
+/* crossfade-style entrance for hero backgrounds */
+.anim-fade {
+  animation: k-fade 0.5s ease-out both;
+}
+/* modal / popover entrance */
+.anim-pop {
+  animation: k-pop 0.32s var(--ease-soft) both;
+}
+/* dimmed overlay entrance */
+.anim-overlay {
+  animation: k-fade 0.25s ease-out both;
+}
