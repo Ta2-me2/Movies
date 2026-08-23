@@ -2,7 +2,9 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": ["main"],
+  "windows": [
+    "main"
+  ],
   "permissions": [
     "core:default",
     "core:window:allow-set-fullscreen",
@@ -12,6 +14,7 @@
     "sql:default",
     "sql:allow-load",
     "sql:allow-select",
-    "sql:allow-execute"
+    "sql:allow-execute",
+    "opener:default"
   ]
 }
