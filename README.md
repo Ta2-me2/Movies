@@ -1,4 +1,4 @@
-# Movie
+# Movies
 
 A personal movie library for macOS, built to look and feel like the Apple TV app.
 
@@ -29,13 +29,13 @@ own rating, genres, a trailer, notes — and, if you want, plays the film itself
 Everything you create is kept in a single folder, outside the application:
 
 ```
-~/Library/Application Support/Movie/
+~/Library/Application Support/Movies/
 ├── library.db      your films, ratings, genres and notes
 ├── posters/        poster images, copied in
 └── trailers/       trailer videos, copied in
 ```
 
-Deleting or replacing `Movie.app` never touches this folder. Posters and
+Deleting or replacing `Movies.app` never touches this folder. Posters and
 trailers are **copied** into the library, so they keep working if you delete
 the originals. Full movie files are **referenced where they are** instead of
 copied — they are far too large to duplicate — so moving or deleting one will
@@ -43,14 +43,14 @@ break its playback, and the app will tell you so.
 
 ## Installing
 
-Download `Movie_1.0.0_aarch64.dmg` from the
+Download `Movies_1.0.0_aarch64.dmg` from the
 [latest release](https://github.com/Ta2-me2/Movies/releases/latest), open it and
-drag **Movie** into Applications. Apple Silicon only.
+drag **Movies** into Applications. Apple Silicon only.
 
 The app is not signed with an Apple Developer certificate, so on first launch
 macOS will say it cannot verify the developer. To open it anyway:
 
-**right-click Movie in Applications → Open → Open.**
+**right-click Movies in Applications → Open → Open.**
 
 You only need to do this once. The app checks GitHub for newer releases on
 launch and shows a quiet note in the sidebar when one is out.
@@ -62,7 +62,7 @@ Requires [Node.js](https://nodejs.org) and [Rust](https://rustup.rs).
 ```bash
 npm install
 npm run tauri dev     # run in development
-npm run tauri build   # produce Movie.app and a .dmg
+npm run tauri build   # produce Movies.app and a .dmg
 ```
 
 Output lands in `src-tauri/target/release/bundle/`.

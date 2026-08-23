@@ -7,11 +7,11 @@ use tauri_plugin_sql::{Migration, MigrationKind};
 /// Everything the user creates lives here, deliberately outside the app
 /// bundle and not keyed to the bundle identifier: deleting or replacing
 /// Movie.app must never take the library with it.
-const LIBRARY_FOLDER: &str = "Movie";
+const LIBRARY_FOLDER: &str = "Movies";
 
-/// Where earlier builds kept their data, so an existing library can be moved
-/// across instead of silently starting empty.
-const LEGACY_FOLDER: &str = "com.kinoteka.app";
+/// Folders earlier builds kept their data in, newest first, so an existing
+/// library is carried across instead of silently starting empty.
+const LEGACY_FOLDERS: [&str; 2] = ["Movie", "com.kinoteka.app"];
 
 fn support_root() -> Option<PathBuf> {
     #[cfg(target_os = "macos")]
@@ -45,12 +45,17 @@ fn library_dir() -> PathBuf {
 /// so gigabytes of trailers do not get duplicated.
 fn migrate_legacy_library() {
     let Some(root) = support_root() else { return };
-    let (old, new) = (root.join(LEGACY_FOLDER), root.join(LIBRARY_FOLDER));
-    if old.is_dir() && !new.exists() {
-        if fs::rename(&old, &new).is_err() {
-            // Different volume or a partial move — leave the original alone
-            // rather than risk losing it.
-            let _ = fs::create_dir_all(&new);
+    let new = root.join(LIBRARY_FOLDER);
+    if new.exists() {
+        return;
+    }
+    for legacy in LEGACY_FOLDERS {
+        let old = root.join(legacy);
+        if old.is_dir() {
+            // A rename rather than a copy, so gigabytes of trailers are not
+            // duplicated. On failure the original is left untouched.
+            let _ = fs::rename(&old, &new);
+            return;
         }
     }
 }
@@ -235,6 +240,51 @@ fn delete_trailer(file_name: String) -> Result<(), String> {
     delete_media(&file_name, "trailers")
 }
 
+/// Replaces the standard About item with one carrying our own metadata.
+///
+/// Only that single item is swapped — the rest of the menu, Edit with its
+/// clipboard shortcuts in particular, is left exactly as Tauri built it.
+///
+/// macOS reads only name, version, copyright, credits and icon from the
+/// metadata, so the author and description go into credits; the others would
+/// simply be ignored here.
+fn install_about_menu(app: &tauri::App) -> tauri::Result<()> {
+    use tauri::image::Image;
+    use tauri::menu::{AboutMetadata, Menu, MenuItemKind, PredefinedMenuItem};
+
+    let handle = app.handle();
+    let menu = Menu::default(handle)?;
+
+    let items = menu.items()?;
+    let Some(MenuItemKind::Submenu(app_menu)) = items.first() else {
+        return Ok(());
+    };
+
+    let metadata = AboutMetadata {
+        name: Some("Movies".into()),
+        version: Some(app.package_info().version.to_string()),
+        copyright: Some("© 2026 Ta2".into()),
+        credits: Some(
+            "A personal movie library for macOS.\n\
+             Your films, your ratings — kept on your own machine.\n\n\
+             by Ta2 · github.com/Ta2-me2/Movies"
+                .into(),
+        ),
+        icon: Image::from_bytes(include_bytes!("../icons/author-logo.png")).ok(),
+        ..Default::default()
+    };
+
+    let about = PredefinedMenuItem::about(handle, Some("About Movies"), Some(metadata))?;
+    let app_items = app_menu.items()?;
+    if let Some(MenuItemKind::Predefined(existing)) = app_items.first() {
+        app_menu.remove(existing)?;
+    }
+    app_menu.insert(&about, 0)?;
+
+    app.set_menu(menu)?;
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let migrations = vec![
@@ -313,6 +363,10 @@ pub fn run() {
             // Posters and trailers now sit outside the identifier-based folder
             // that the static asset scope covers, so allow the library here.
             let _ = app.asset_protocol_scope().allow_directory(library_dir(), true);
+            if let Err(error) = install_about_menu(app) {
+                // A stock About panel is a perfectly acceptable fallback.
+                eprintln!("could not customise the About panel: {error}");
+            }
             Ok(())
         })
         .run(tauri::generate_context!())
