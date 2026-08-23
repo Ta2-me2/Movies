@@ -1,80 +1,137 @@
-# Movies
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/6d546271-796a-4612-8383-d148837c60b1" width="128" alt="Movies app icon" />
 
-A personal movie library for macOS, built to look and feel like the Apple TV app.
+  # Movies
 
-It is **not** a streaming client. Nothing is fetched from the internet and there
-are no accounts: the app stores cards for films you have watched — poster, your
-own rating, genres, a trailer, notes — and, if you want, plays the film itself.
+  **Your personal movie library for macOS.**
+
+  A beautiful, private place for the films you love — inspired by the Apple TV experience.
+
+  [Download](https://github.com/Ta2-me2/Movies/releases/latest) · [Build from source](#building) · [Report an issue](https://github.com/Ta2-me2/Movies/issues)
+</div>
+
+---
+
+## About
+
+Movies is not a streaming client. It does not fetch content from the internet and has no accounts.
+
+Keep cards for films you have watched: posters, personal ratings, genres, trailers, notes — and optionally the movie file itself.
+
+> Built for Apple Silicon Macs.
+
+---
 
 ## Features
 
-- **Home** — a hero carousel of your highest-rated films (above 7.0) playing
-  their trailers, then rows for *My Top*, *Recently Added* and one row per
-  genre. Row titles open the full deck.
-- **Trailer and movie playback** — every film can have a trailer; films that
-  also have a movie file get a split *Trailer* button whose chevron reveals
-  *Play Movie*. Playback is fullscreen, with a resume point kept for the
-  session.
-- **All Movies** — sort by rating or date added, filter by rating band
-  (`9` means 9.0–9.9, `10` means exactly 10.0) and by genre.
-- **Search** — the whole library as a deck, narrowing as you type. `Cmd+F`
-  focuses it from anywhere.
-- **Genres** — a managed list: pick existing ones, add new, or delete a genre
-  everywhere at once.
-- **Native macOS interface** — a translucent sidebar that collapses, the system
-  accent colour, and materials rather than flat panels.
+### Home
 
-## Where your data lives
+A cinematic home screen with a hero carousel for your highest-rated films, complete with trailers. Browse *My Top*, *Recently Added*, and individual genre rows; open any row to see its full collection.
 
-Everything you create is kept in a single folder, outside the application:
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cc0c5ac7-79c1-44c6-89bd-f3e0f7d4b237" width="90%" alt="Movies home screen" />
+</p>
 
-```
+### Trailer and movie playback
+
+Every film can include a trailer. When you attach a movie file, the Trailer button reveals **Play Movie**. Playback opens fullscreen and remembers your position for the current session.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/aa828618-6c4c-443c-a53c-47713bf9ab3a" width="90%" alt="Movie playback" />
+</p>
+
+### All Movies
+
+Browse your complete library, sort it by rating or date added, and filter by genre or rating range. For example, `9` shows films rated 9.0–9.9, while `10` shows only perfect scores.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/81709b5f-703c-4b94-93a0-2cc1eb0faa67" width="90%" alt="All Movies screen" />
+</p>
+
+### Search
+
+Search through the entire library as you type. Press `⌘F` from anywhere to focus search instantly.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5c58b866-48c9-4769-9e82-0b8fb3533810" width="90%" alt="Search screen" />
+</p>
+
+### Genres
+
+Manage a shared genre list: select existing genres, create new ones, or remove a genre everywhere at once.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4e8a3724-fcba-4813-b9e3-f98ed387fa8d" width="90%" alt="Genre management" />
+</p>
+
+### Native macOS feel
+
+- Translucent, collapsible sidebar
+- System accent colour support
+- Native materials instead of flat panels
+- Fullscreen video playback
+
+---
+
+## Your data
+
+Everything stays in one folder outside the app:
+
+```text
 ~/Library/Application Support/Movies/
-├── library.db      your films, ratings, genres and notes
-├── posters/        poster images, copied in
-└── trailers/       trailer videos, copied in
+├── library.db      Films, ratings, genres, and notes
+├── posters/        Poster images copied into the library
+└── trailers/       Trailer videos copied into the library
 ```
 
-Deleting or replacing `Movies.app` never touches this folder. Posters and
-trailers are **copied** into the library, so they keep working if you delete
-the originals. Full movie files are **referenced where they are** instead of
-copied — they are far too large to duplicate — so moving or deleting one will
-break its playback, and the app will tell you so.
+Deleting or replacing `Movies.app` never touches this folder.
 
-## Installing
+Posters and trailers are copied into the library, so they keep working even if you delete the originals. Movie files are referenced in their original location to avoid duplicating large files; moving or deleting one will prevent playback.
 
-Download `Movies_1.0.0_aarch64.dmg` from the
-[latest release](https://github.com/Ta2-me2/Movies/releases/latest), open it and
-drag **Movies** into Applications. Apple Silicon only.
+---
 
-The app is not signed with an Apple Developer certificate, so on first launch
-macOS will say it cannot verify the developer. To open it anyway:
+## Installation
 
-**right-click Movies in Applications → Open → Open.**
+1. Download `Movies_1.0.0_aarch64.dmg` from the [latest release](https://github.com/Ta2-me2/Movies/releases/latest).
+2. Open the disk image and drag **Movies** to **Applications**.
+3. On first launch, macOS may say it cannot verify the developer. Right-click the app, choose **Open**, then confirm **Open**.
 
-You only need to do this once. The app checks GitHub for newer releases on
-launch and shows a quiet note in the sidebar when one is out.
+You only need to do this once.
+
+> The app checks GitHub for updates on launch and shows a quiet note in the sidebar when a new release is available.
+
+---
 
 ## Building
 
-Requires [Node.js](https://nodejs.org) and [Rust](https://rustup.rs).
+### Requirements
+
+- [Node.js](https://nodejs.org)
+- [Rust](https://rustup.rs)
+- macOS on Apple Silicon
 
 ```bash
 npm install
-npm run tauri dev     # run in development
-npm run tauri build   # produce Movies.app and a .dmg
+npm run tauri dev     # Run in development
+npm run tauri build   # Build Movies.app and a .dmg
 ```
 
-Output lands in `src-tauri/target/release/bundle/`.
+Build artifacts are placed in:
+
+```text
+src-tauri/target/release/bundle/
+```
+
+---
 
 ## Built with
 
 [Tauri 2](https://tauri.app) · React · TypeScript · Tailwind CSS · SQLite
 
-## Author
+---
 
-Made by **Ta2** — [github.com/Ta2-me2](https://github.com/Ta2-me2)
+<div align="center">
+  Made with care by <a href="https://github.com/Ta2-me2">Ta2</a>
 
-## Licence
-
-MIT — see [LICENSE](LICENSE).
+  MIT License — see <a href="LICENSE">LICENSE</a>.
+</div>
