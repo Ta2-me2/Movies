@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Movie",
+  "productName": "Movies",
   "version": "1.0.0",
-  "identifier": "com.movie.app",
+  "identifier": "com.movies.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Movie",
+        "title": "Movies",
         "width": 1440,
         "height": 900,
         "minWidth": 1100,
