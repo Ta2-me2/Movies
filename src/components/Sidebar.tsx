@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useLibrary } from "../lib/store";
-import { FilmIcon, HomeIcon, PlusIcon, SearchIcon, SidebarIcon } from "./Icons";
+import { checkForUpdate, openExternal, type UpdateInfo } from "../lib/updates";
+import AboutPanel from "./AboutPanel";
+import { FilmIcon, HomeIcon, InfoIcon, PlusIcon, SearchIcon, SidebarIcon } from "./Icons";
 
 const items = [
   { to: "/search", label: "Search", icon: SearchIcon },
@@ -22,6 +25,20 @@ export default function Sidebar({
   onToggle(): void;
 }) {
   const { openForm } = useLibrary();
+  const [update, setUpdate] = useState<UpdateInfo | null>(null);
+  const [aboutOpen, setAboutOpen] = useState(false);
+
+  // A quiet look for a newer release, once per launch. Anything that goes
+  // wrong — offline, rate limited, no releases yet — simply shows nothing.
+  useEffect(() => {
+    let cancelled = false;
+    void checkForUpdate().then((found) => {
+      if (!cancelled) setUpdate(found);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <aside
@@ -81,7 +98,27 @@ export default function Sidebar({
         ))}
       </nav>
 
-      <div className="mt-auto">
+      <div className="mt-auto flex flex-col gap-2">
+        {update && (
+          <button
+            onClick={() => void openExternal(update.url)}
+            title={`Version ${update.version} is available on GitHub`}
+            className="focus-ring flex w-full items-center gap-2 rounded-[7px] px-2.5 py-[6px] text-left text-[12px] font-medium transition-colors duration-150 hover:bg-[var(--fill-subtle)]"
+          >
+            <span
+              className="size-[7px] shrink-0 rounded-full"
+              style={{ backgroundColor: "var(--accent)" }}
+              aria-hidden
+            />
+            <span className="min-w-0 flex-1 truncate text-[var(--text-1)]">
+              Update available
+            </span>
+            <span className="shrink-0 tabular-nums text-[var(--text-3)]">
+              {update.version}
+            </span>
+          </button>
+        )}
+
         <button
           onClick={() => openForm()}
           className="focus-ring flex w-full items-center justify-center gap-1.5 rounded-[7px] bg-white py-[6px] text-[13px] font-semibold text-black transition-opacity duration-150 hover:opacity-90 active:opacity-75"
@@ -89,7 +126,17 @@ export default function Sidebar({
           <PlusIcon width={14} height={14} strokeWidth={2.6} />
           Add Movie
         </button>
+
+        <button
+          onClick={() => setAboutOpen(true)}
+          className="focus-ring flex w-full items-center justify-center gap-1.5 rounded-[7px] py-[4px] text-[11px] font-medium text-[var(--text-3)] transition-colors duration-150 hover:bg-[var(--fill-subtle)] hover:text-[var(--text-2)]"
+        >
+          <InfoIcon width={12} height={12} />
+          About Movie
+        </button>
       </div>
+
+      {aboutOpen && <AboutPanel onClose={() => setAboutOpen(false)} />}
     </aside>
   );
 }

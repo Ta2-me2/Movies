@@ -41,6 +41,20 @@ the originals. Full movie files are **referenced where they are** instead of
 copied — they are far too large to duplicate — so moving or deleting one will
 break its playback, and the app will tell you so.
 
+## Installing
+
+Download `Movie_1.0.0_aarch64.dmg` from the
+[latest release](https://github.com/Ta2-me2/Movies/releases/latest), open it and
+drag **Movie** into Applications. Apple Silicon only.
+
+The app is not signed with an Apple Developer certificate, so on first launch
+macOS will say it cannot verify the developer. To open it anyway:
+
+**right-click Movie in Applications → Open → Open.**
+
+You only need to do this once. The app checks GitHub for newer releases on
+launch and shows a quiet note in the sidebar when one is out.
+
 ## Building
 
 Requires [Node.js](https://nodejs.org) and [Rust](https://rustup.rs).
@@ -56,6 +70,10 @@ Output lands in `src-tauri/target/release/bundle/`.
 ## Built with
 
 [Tauri 2](https://tauri.app) · React · TypeScript · Tailwind CSS · SQLite
+
+## Author
+
+Made by **Ta2** — [github.com/Ta2-me2](https://github.com/Ta2-me2)
 
 ## Licence
 

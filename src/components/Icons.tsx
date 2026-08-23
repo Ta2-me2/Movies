@@ -166,6 +166,14 @@ export const Forward10Icon = (p: IconProps) => (
   </svg>
 );
 
+export const InfoIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 11.2v5" />
+    <circle cx="12" cy="8.1" r="0.9" fill="currentColor" stroke="none" />
+  </svg>
+);
+
 export const CheckIcon = (p: IconProps) => (
   <svg {...base(p)}>
     <path d="m5 12.5 4.5 4.5L19 7.5" />
