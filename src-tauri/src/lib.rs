@@ -18,6 +18,15 @@ const STORE_FOLDER: &str = "Movies";
 /// is carried into.
 const DEFAULT_LIBRARY: &str = "My Library";
 
+/// Marks a folder in the store as a library before it has a database.
+///
+/// A library normally announces itself by holding `library.db`, but one that
+/// was just created holds nothing at all — and an older version of the app,
+/// run against this store, drops `posters` and `trailers` beside the
+/// libraries rather than inside one. Without something to tell them apart,
+/// those would be listed as libraries of their own.
+const LIBRARY_MARKER: &str = ".movies-library";
+
 /// Folders earlier builds kept their data in, newest first, so an existing
 /// library is carried across instead of silently starting empty.
 const LEGACY_FOLDERS: [&str; 2] = ["Movie", "com.kinoteka.app"];
@@ -107,19 +116,21 @@ fn sanitize_library_name(raw: &str) -> Option<String> {
     Some(name.to_string())
 }
 
-/// Every library in the store, alphabetically.
-///
-/// A library is any visible folder in it — not only one that already has a
-/// database. A library created a moment ago has nothing in it but empty
-/// posters and trailers folders, and it still has to appear in the list, or
-/// making one looks like it did nothing. Hidden folders are skipped, which is
-/// what keeps a half-unpacked import out of the list.
+/// Whether a folder in the store is one of ours: it holds a database, or it
+/// was created by us and has not been used yet.
+fn is_library_dir(dir: &Path) -> bool {
+    dir.join("library.db").is_file() || dir.join(LIBRARY_MARKER).is_file()
+}
+
+/// Every library in the store, alphabetically. Hidden folders are skipped,
+/// which is what keeps a half-unpacked import out of the list.
 fn library_names() -> Vec<String> {
-    let mut names: Vec<String> = fs::read_dir(store_dir())
+    let store = store_dir();
+    let mut names: Vec<String> = fs::read_dir(&store)
         .into_iter()
         .flatten()
         .flatten()
-        .filter(|entry| entry.path().is_dir())
+        .filter(|entry| entry.path().is_dir() && is_library_dir(&entry.path()))
         .filter_map(|entry| entry.file_name().into_string().ok())
         .filter(|name| !name.starts_with('.'))
         .collect();
@@ -582,6 +593,8 @@ fn create_library(name: String) -> Result<String, String> {
     let dir = library_path_for(&name)?;
     fs::create_dir_all(dir.join("posters")).map_err(|e| e.to_string())?;
     fs::create_dir_all(dir.join("trailers")).map_err(|e| e.to_string())?;
+    // Says "this is a library" until the database exists to say it instead.
+    fs::write(dir.join(LIBRARY_MARKER), b"").map_err(|e| e.to_string())?;
     // The database itself is created, and migrated, when the library is opened.
     Ok(name)
 }
