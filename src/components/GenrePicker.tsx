@@ -123,7 +123,7 @@ export default function GenrePicker({ selected, onChange }: Props) {
               type="button"
               onClick={() => void submitNew()}
               aria-label="Add new genre"
-              className="focus-ring flex size-[27px] shrink-0 items-center justify-center rounded-[6px] bg-white text-black transition-opacity duration-150 hover:opacity-90 disabled:opacity-40"
+              className="btn-solid focus-ring flex size-[27px] shrink-0 items-center justify-center rounded-[6px] transition-opacity duration-150 hover:opacity-90 disabled:opacity-40"
               disabled={!normalizeGenre(newGenre)}
             >
               <PlusIcon width={14} height={14} strokeWidth={2.6} />
@@ -164,7 +164,7 @@ export default function GenrePicker({ selected, onChange }: Props) {
                       type="button"
                       onClick={() => setConfirmDelete(g)}
                       aria-label={`Delete genre ${g}`}
-                      className="flex size-6 shrink-0 items-center justify-center rounded-[5px] text-transparent transition-colors duration-100 hover:bg-[var(--fill)] group-hover/genre:text-[var(--text-3)] hover:!text-[#ff6961]"
+                      className="flex size-6 shrink-0 items-center justify-center rounded-[5px] text-transparent transition-colors duration-100 hover:bg-[var(--fill)] group-hover/genre:text-[var(--text-3)] hover:!text-[var(--danger)]"
                     >
                       <TrashIcon width={13} height={13} />
                     </button>

@@ -72,7 +72,7 @@ export default function MoviePage() {
         {video ? (
           <VideoBackground movieId={movie.id} src={video} />
         ) : (
-          <div className="absolute inset-0 bg-[#161618]">
+          <div className="absolute inset-0 bg-[var(--surface)]">
             {poster && (
               <img
                 src={poster}
@@ -83,7 +83,7 @@ export default function MoviePage() {
             )}
           </div>
         )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[#0f0f0f]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-[var(--bg)]" />
 
         {/* Back */}
         <button
@@ -120,18 +120,18 @@ export default function MoviePage() {
 
       {/* Content: poster + info */}
       <div className="relative z-10 -mt-40 flex items-end gap-9 pl-[var(--gutter-l)] pr-[var(--gutter-r)]">
-        <div className="w-[218px] shrink-0 overflow-hidden rounded-[10px] bg-[#232326] shadow-[0_18px_50px_rgba(0,0,0,0.55),inset_0_0_0_0.5px_var(--hairline)]">
+        <div className="w-[218px] shrink-0 overflow-hidden rounded-[10px] bg-[var(--surface-2)] shadow-[var(--shadow-poster),inset_0_0_0_0.5px_var(--hairline)]">
           {poster ? (
             <img src={poster} alt="" draggable={false} className="aspect-[2/3] w-full object-cover" />
           ) : (
-            <div className="flex aspect-[2/3] w-full items-end bg-gradient-to-b from-[#2b2b2f] to-[#1a1a1d] p-3">
-              <span className="text-[14px] font-semibold text-[var(--text-2)]">{movie.title}</span>
+            <div className="flex aspect-[2/3] w-full items-end bg-gradient-to-b from-[var(--surface-3)] to-[var(--surface)] p-3">
+              <span className="text-[14px] font-semibold text-white/70">{movie.title}</span>
             </div>
           )}
         </div>
 
         <div className="min-w-0 flex-1 pb-1">
-          <h1 className="text-[40px] font-bold leading-tight tracking-tight drop-shadow-[0_2px_14px_rgba(0,0,0,0.6)]">
+          <h1 className="title-shadow text-[40px] font-bold leading-tight tracking-tight">
             {movie.title}
           </h1>
           {meta && <div className="mt-1.5 text-[15px] font-medium text-[var(--text-2)]">{meta}</div>}
@@ -163,7 +163,7 @@ export default function MoviePage() {
             </button>
             <button
               onClick={() => setConfirming(true)}
-              className="mat-control focus-ring flex items-center gap-2 rounded-full px-4 py-[7px] text-[13px] font-medium text-[#ff6961] transition-colors duration-150 hover:bg-[var(--fill-emphasis)]"
+              className="mat-control focus-ring flex items-center gap-2 rounded-full px-4 py-[7px] text-[13px] font-medium text-[var(--danger)] transition-colors duration-150 hover:bg-[var(--fill-emphasis)]"
             >
               <TrashIcon width={14} height={14} />
               Delete

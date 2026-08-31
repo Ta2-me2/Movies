@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { openSettings } from "../lib/panels";
 import { useLibrary } from "../lib/store";
 import { checkForUpdate, openExternal, type UpdateInfo } from "../lib/updates";
-import { FilmIcon, HomeIcon, PlusIcon, SearchIcon, SidebarIcon } from "./Icons";
+import { FilmIcon, GearIcon, HomeIcon, PlusIcon, SearchIcon, SidebarIcon } from "./Icons";
 
 const items = [
   { to: "/search", label: "Search", icon: SearchIcon },
@@ -54,9 +55,17 @@ export default function Sidebar({
       }`}
     >
       {/* Toolbar row: leaves room for the traffic lights on the left and
-          carries the collapse control on the right, as AppKit does. The bare
-          background here also drags the window — Tauri skips the button. */}
-      <div className="flex h-13 shrink-0 items-center justify-end">
+          carries Settings and the collapse control on the right, as AppKit
+          does. The bare background here also drags the window — Tauri skips
+          the buttons. */}
+      <div className="flex h-13 shrink-0 items-center justify-end gap-[2px]">
+        <button
+          onClick={() => void openSettings()}
+          aria-label="Settings"
+          className="flex size-[26px] items-center justify-center rounded-[6px] text-[var(--text-2)] transition-colors duration-150 hover:bg-[var(--fill)] hover:text-[var(--text-1)]"
+        >
+          <GearIcon width={17} height={17} strokeWidth={1.7} />
+        </button>
         <button
           onClick={onToggle}
           aria-label="Hide Sidebar"
@@ -119,7 +128,7 @@ export default function Sidebar({
 
         <button
           onClick={() => openForm()}
-          className="focus-ring flex w-full items-center justify-center gap-1.5 rounded-[7px] bg-white py-[6px] text-[13px] font-semibold text-black transition-opacity duration-150 hover:opacity-90 active:opacity-75"
+          className="btn-solid focus-ring flex w-full items-center justify-center gap-1.5 rounded-[7px] py-[6px] text-[13px] font-semibold transition-opacity duration-150 hover:opacity-90 active:opacity-75"
         >
           <PlusIcon width={14} height={14} strokeWidth={2.6} />
           Add Movie

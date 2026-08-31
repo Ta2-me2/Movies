@@ -102,6 +102,65 @@ export const FullscreenIcon = (p: IconProps) => (
   </svg>
 );
 
+/** An archive box: what a library becomes when it is written to a zip. */
+export const ArchiveIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M3.5 7.5h17v11.5a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V7.5Z" />
+    <path d="M2.5 5.2a1 1 0 0 1 1-1h17a1 1 0 0 1 1 1v2.3h-19V5.2Z" />
+    <path d="M9.8 11.5h4.4" />
+  </svg>
+);
+
+/** A document with an arrow coming into it: restoring from a backup. */
+export const RestoreIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M13.5 3.5H6.5a1.5 1.5 0 0 0-1.5 1.5v14a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V9l-5.5-5.5Z" />
+    <path d="M13.5 3.5V9H19" />
+    <path d="M12 11.8v5.4M9.7 14.9 12 17.2l2.3-2.3" />
+  </svg>
+);
+
+/** Books on a shelf: the list of libraries. */
+export const LibrariesIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M4 4.5h3v15H4zM9 4.5h3v15H9z" />
+    <path d="m14.6 5.4 2.9-.8 3 14.5-2.9.8z" />
+  </svg>
+);
+
+/** An arrow leaving a box: opening the folder in the Finder. */
+export const RevealIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M13.5 4.5H19V10" />
+    <path d="M19 4.5 11.5 12" />
+    <path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 5 18.5v-10A1.5 1.5 0 0 1 6.5 7H11" />
+  </svg>
+);
+
+/** The three dots macOS puts on a menu button. */
+export const EllipsisIcon = (p: IconProps) => (
+  <svg {...{ ...base(p), fill: "currentColor", stroke: "none" }}>
+    <circle cx="6" cy="12" r="1.55" />
+    <circle cx="12" cy="12" r="1.55" />
+    <circle cx="18" cy="12" r="1.55" />
+  </svg>
+);
+
+/** A folder, for a library in the list. */
+export const FolderIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M3.5 7a1.5 1.5 0 0 1 1.5-1.5h3.6c.4 0 .79.16 1.07.44l1.26 1.25h7.57A1.5 1.5 0 0 1 20 8.7v9.3a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18V7Z" />
+  </svg>
+);
+
+/** Matches AppKit's `gearshape`: eight teeth around a ring, hub in the middle. */
+export const GearIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M9.70 5.50 10.38 3.25 13.62 3.25 14.30 5.50 14.64 5.63 14.97 5.77 17.04 4.67 19.33 6.96 18.23 9.03 18.37 9.36 18.50 9.70 20.75 10.38 20.75 13.62 18.50 14.30 18.37 14.64 18.23 14.97 19.33 17.04 17.04 19.33 14.97 18.23 14.64 18.37 14.30 18.50 13.62 20.75 10.38 20.75 9.70 18.50 9.36 18.37 9.03 18.23 6.96 19.33 4.67 17.04 5.77 14.97 5.63 14.64 5.50 14.30 3.25 13.62 3.25 10.38 5.50 9.70 5.63 9.36 5.77 9.03 4.67 6.96 6.96 4.67 9.03 5.77 9.36 5.63Z" />
+    <circle cx="12" cy="12" r="3.05" />
+  </svg>
+);
+
 /** Matches AppKit's `sidebar.leading` toggle glyph. */
 export const SidebarIcon = (p: IconProps) => (
   <svg {...base(p)}>

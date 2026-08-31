@@ -64,9 +64,15 @@ Manage a shared genre list: select existing genres, create new ones, or remove a
   <img src="https://github.com/user-attachments/assets/4e8a3724-fcba-4813-b9e3-f98ed387fa8d" width="90%" alt="Genre management" />
 </p>
 
+### Appearance
+
+Light and dark themes, or follow the system. Whichever you pick, the whole app wears it — every window, including ones you have not opened yet. The app icon comes in two variants; pick either from Settings.
+
+
 ### Native macOS feel
 
 - Translucent, collapsible sidebar
+- Light and dark appearance, or follow macOS
 - System accent colour support
 - Native materials instead of flat panels
 - Fullscreen video playback
@@ -75,24 +81,35 @@ Manage a shared genre list: select existing genres, create new ones, or remove a
 
 ## Your data
 
-Everything stays in one folder outside the app:
+Everything stays in one folder outside the app. That folder holds your libraries — one subfolder each:
 
 ```text
 ~/Library/Application Support/Movies/
-├── library.db      Films, ratings, genres, and notes
-├── posters/        Poster images copied into the library
-└── trailers/       Trailer videos copied into the library
+├── preferences.json    Appearance, app icon, which library is open
+└── My Library/
+    ├── library.db      Films, ratings, genres, and notes
+    ├── posters/        Poster images copied into the library
+    └── trailers/       Trailer videos copied into the library
 ```
 
 Deleting or replacing `Movies.app` never touches this folder.
 
 Posters and trailers are copied into the library, so they keep working even if you delete the originals. Movie files are referenced in their original location to avoid duplicating large files; moving or deleting one will prevent playback.
 
+### Backups and libraries
+
+**Settings ▸ Your Library** shows where the open library is and what is in it:
+
+- **Export Library…** writes the whole folder to a zip. That zip is the backup — the database, every poster and every trailer, byte for byte. Movie files are not in it, because they were never copied into the library in the first place.
+- **Restore from Backup…** reads such a zip back in, always as a *new* library beside the others and never over the top of one.
+- **Libraries…** lists every library you have. One is open at a time; you can create, rename, reveal, back up and delete them. Opening another relaunches the app into it and leaves the one you came from exactly as it was.
+
+
 ---
 
 ## Installation
 
-1. Download `Movies_1.0.0_aarch64.dmg` from the [latest release](https://github.com/Ta2-me2/Movies/releases/latest).
+1. Download `Movies_1.1.0_aarch64.dmg` from the [latest release](https://github.com/Ta2-me2/Movies/releases/latest).
 2. Open the disk image and drag **Movies** to **Applications**.
 3. On first launch, macOS may say it cannot verify the developer. Right-click the app, choose **Open**, then confirm **Open**.
 

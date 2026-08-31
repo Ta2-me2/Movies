@@ -140,7 +140,7 @@ export default function Hero({ movies }: { movies: Movie[] }) {
         {video ? (
           <VideoBackground movieId={movie.id} src={video} />
         ) : (
-          <div className="absolute inset-0 overflow-hidden bg-[#161618]">
+          <div className="absolute inset-0 overflow-hidden bg-[var(--surface)]">
             {poster && (
               <>
                 <img
@@ -164,7 +164,7 @@ export default function Hero({ movies }: { movies: Movie[] }) {
 
       {/* Left scrim for text legibility and a seamless fade into the page below */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/65 via-black/15 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent via-[#0f0f0f]/60 to-[#0f0f0f]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent via-[var(--bg)]/60 to-[var(--bg)]" />
 
       {/* Clicking the video/backdrop itself opens the movie page */}
       <button
@@ -193,14 +193,14 @@ export default function Hero({ movies }: { movies: Movie[] }) {
         key={`content-${movie.id}`}
         className="anim-in pointer-events-none absolute bottom-20 left-[var(--gutter-l)] z-20 max-w-[560px] pr-10"
       >
-        <h1 className="text-[56px] font-bold leading-[1.05] tracking-tight drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
+        <h1 className="text-[56px] font-bold leading-[1.05] tracking-tight text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
           {movie.title}
         </h1>
-        <div className="mt-3 text-[14px] font-medium text-[var(--text-2)]">
+        <div className="mt-3 text-[14px] font-medium text-white/70">
           {metaParts.join(" · ")}
         </div>
         {blurb && (
-          <p className="mt-2 max-w-[480px] text-[14px] leading-snug text-[var(--text-2)] line-clamp-2">
+          <p className="mt-2 max-w-[480px] text-[14px] leading-snug text-white/70 line-clamp-2">
             {blurb}
           </p>
         )}
