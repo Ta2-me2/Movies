@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/6d546271-796a-4612-8383-d148837c60b1" width="128" alt="Movies app icon" />
+  <img src="https://github.com/user-attachments/assets/540be716-7ad0-4743-8669-701d6b5dbdaf" width="128" alt="Movies app icon" />
 
   # Movies
 
@@ -16,7 +16,7 @@
 
 Movies is not a streaming client. It does not fetch content from the internet and has no accounts.
 
-Keep cards for films you have watched: posters, personal ratings, genres, trailers, notes — and optionally the movie file itself.
+Keep a private collection of films you have watched: posters, personal ratings, genres, trailers, notes, and — if you want — the movie file itself.
 
 > Built for Apple Silicon Macs.
 
@@ -26,18 +26,20 @@ Keep cards for films you have watched: posters, personal ratings, genres, traile
 
 ### Home
 
-A cinematic home screen with a hero carousel for your highest-rated films, complete with trailers. Browse *My Top*, *Recently Added*, and individual genre rows; open any row to see its full collection.
+A cinematic home screen with a hero carousel for your highest-rated films, complete with trailers. Browse *My Top*, *Recently Added*, and genre rows; open any row to see the full collection.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/cc0c5ac7-79c1-44c6-89bd-f3e0f7d4b237" width="90%" alt="Movies home screen" />
+  <img src="https://github.com/user-attachments/assets/bc58973d-1efa-4ec2-9a98-c6c49926ad13" width="92%" alt="Movies home screen" />
 </p>
+
+
 
 ### Trailer and movie playback
 
 Every film can include a trailer. When you attach a movie file, the Trailer button reveals **Play Movie**. Playback opens fullscreen and remembers your position for the current session.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/aa828618-6c4c-443c-a53c-47713bf9ab3a" width="90%" alt="Movie playback" />
+  <img src="https://github.com/user-attachments/assets/27cf87cb-6d48-4844-b0b6-b699afd778f5" width="92%" alt="Movie playback" />
 </p>
 
 ### All Movies
@@ -45,7 +47,7 @@ Every film can include a trailer. When you attach a movie file, the Trailer butt
 Browse your complete library, sort it by rating or date added, and filter by genre or rating range. For example, `9` shows films rated 9.0–9.9, while `10` shows only perfect scores.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/81709b5f-703c-4b94-93a0-2cc1eb0faa67" width="90%" alt="All Movies screen" />
+  <img src="https://github.com/user-attachments/assets/86cc14df-abc5-4699-ac00-5598db315043" width="92%" alt="All Movies screen" />
 </p>
 
 ### Search
@@ -53,7 +55,7 @@ Browse your complete library, sort it by rating or date added, and filter by gen
 Search through the entire library as you type. Press `⌘F` from anywhere to focus search instantly.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/5c58b866-48c9-4769-9e82-0b8fb3533810" width="90%" alt="Search screen" />
+  <img src="https://github.com/user-attachments/assets/eb7d35d3-4b95-46d8-8304-b920ef700c82" width="92%" alt="Search screen" />
 </p>
 
 ### Genres
@@ -61,31 +63,36 @@ Search through the entire library as you type. Press `⌘F` from anywhere to foc
 Manage a shared genre list: select existing genres, create new ones, or remove a genre everywhere at once.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4e8a3724-fcba-4813-b9e3-f98ed387fa8d" width="90%" alt="Genre management" />
+  <img src="https://github.com/user-attachments/assets/4e8a3724-fcba-4813-b9e3-f98ed387fa8d" width="92%" alt="Genre management" />
 </p>
 
 ### Appearance
 
-Light and dark themes, or follow the system. Whichever you pick, the whole app wears it — every window, including ones you have not opened yet. The app icon comes in two variants; pick either from Settings.
+Choose a light theme, dark theme, or follow macOS. Your choice applies across the whole app — including windows you have not opened yet.
 
+Settings and About now open in their own windows, available from the gear beside the sidebar control or from the macOS menu bar. The app icon also has light and dark variants, which you can choose in Settings.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/95491e3a-a18c-4e81-ad15-e1788c751e2f" width="440" alt="Appearance settings" />
+</p>
 
 ### Native macOS feel
 
 - Translucent, collapsible sidebar
-- Light and dark appearance, or follow macOS
 - System accent colour support
 - Native materials instead of flat panels
 - Fullscreen video playback
+- Menu bar integration
 
 ---
 
 ## Your data
 
-Everything stays in one folder outside the app. That folder holds your libraries — one subfolder each:
+Everything stays in one folder outside the app. It contains your preferences and one folder for each library:
 
 ```text
 ~/Library/Application Support/Movies/
-├── preferences.json    Appearance, app icon, which library is open
+├── preferences.json    Appearance, app icon, and the active library
 └── My Library/
     ├── library.db      Films, ratings, genres, and notes
     ├── posters/        Poster images copied into the library
@@ -94,16 +101,15 @@ Everything stays in one folder outside the app. That folder holds your libraries
 
 Deleting or replacing `Movies.app` never touches this folder.
 
-Posters and trailers are copied into the library, so they keep working even if you delete the originals. Movie files are referenced in their original location to avoid duplicating large files; moving or deleting one will prevent playback.
+Posters and trailers are copied into the library, so they keep working if you delete the originals. Movie files are referenced in their original location to avoid duplicating large files; moving or deleting one will prevent playback.
 
 ### Backups and libraries
 
-**Settings ▸ Your Library** shows where the open library is and what is in it:
+**Settings ▸ Your Library** shows the location and contents of the active library.
 
-- **Export Library…** writes the whole folder to a zip. That zip is the backup — the database, every poster and every trailer, byte for byte. Movie files are not in it, because they were never copied into the library in the first place.
-- **Restore from Backup…** reads such a zip back in, always as a *new* library beside the others and never over the top of one.
-- **Libraries…** lists every library you have. One is open at a time; you can create, rename, reveal, back up and delete them. Opening another relaunches the app into it and leaves the one you came from exactly as it was.
-
+- **Export Library…** saves the complete library folder as a ZIP archive: its database, posters, and trailers. Movie files are not included because they are referenced, not copied into the library.
+- **Restore from Backup…** imports that archive as a **new** library alongside the existing ones. It never overwrites a library.
+- **Libraries…** lists every library you have. You can create, rename, reveal, back up, or delete libraries. Opening another library relaunches the app into it, leaving the previous one unchanged.
 
 ---
 
@@ -115,7 +121,7 @@ Posters and trailers are copied into the library, so they keep working even if y
 
 You only need to do this once.
 
-> The app checks GitHub for updates on launch and shows a quiet note in the sidebar when a new release is available.
+> Movies checks GitHub for updates on launch and shows a quiet note in the sidebar when a new release is available.
 
 ---
 
