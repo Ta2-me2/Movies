@@ -117,9 +117,23 @@ Posters and trailers are copied into the library, so they keep working if you de
 
 1. Download `Movies_1.1.0_aarch64.dmg` from the [latest release](https://github.com/Ta2-me2/Movies/releases/latest).
 2. Open the disk image and drag **Movies** to **Applications**.
-3. On first launch, macOS may say it cannot verify the developer. Right-click the app, choose **Open**, then confirm **Open**.
+3. Open Terminal and run:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/Movies.app
+   ```
+
+4. Open Movies from Applications.
 
 You only need to do this once.
+
+### Why step 3 is necessary
+
+Movies is not signed with an Apple Developer certificate, which costs $99 a year. macOS marks everything downloaded from the internet as quarantined, and for an app without that certificate it refuses to open it at all — with a message saying the app **is damaged and should be moved to the Trash**. Nothing is damaged; that is simply what macOS says about unsigned software it downloaded. The command above clears the quarantine mark on your copy.
+
+Right-clicking and choosing **Open** does *not* help here. That workaround is for apps signed by a developer but not notarised by Apple, which is a different situation.
+
+If you would rather not run a Terminal command, build the app yourself — see [Building](#building). Software you compile locally is never quarantined.
 
 > Movies checks GitHub for updates on launch and shows a quiet note in the sidebar when a new release is available.
 
@@ -137,6 +151,7 @@ You only need to do this once.
 npm install
 npm run tauri dev     # Run in development
 npm run tauri build   # Build Movies.app and a .dmg
+npm run release       # Build, then tidy the .dmg install window
 ```
 
 Build artifacts are placed in:
@@ -144,6 +159,8 @@ Build artifacts are placed in:
 ```text
 src-tauri/target/release/bundle/
 ```
+
+Use `npm run release` for anything you intend to publish. It runs the normal build and then `scripts/finish-dmg.sh`, which removes the volume-icon file the bundler leaves at the root of the disk image — the Finder draws that file in the install window, beside the application the user is supposed to drag.
 
 ---
 
