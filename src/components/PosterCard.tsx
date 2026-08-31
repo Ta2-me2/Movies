@@ -21,7 +21,7 @@ export default function PosterCard({ movie, number, fluid }: Props) {
       className={`group/card relative shrink-0 focus:outline-none ${fluid ? "w-full" : "w-[186px]"}`}
       aria-label={movie.title}
     >
-      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-[8px] bg-[#232326] shadow-[inset_0_0_0_0.5px_var(--hairline)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-soft)] group-hover/card:scale-[1.05] group-hover/card:shadow-[0_10px_36px_rgba(0,0,0,0.65)]">
+      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-[8px] bg-[var(--surface-2)] shadow-[inset_0_0_0_0.5px_var(--hairline)] transition-[transform,box-shadow] duration-300 ease-[var(--ease-soft)] group-hover/card:scale-[1.05] group-hover/card:shadow-[var(--shadow-card-hover)]">
         {src ? (
           <img
             src={src}
@@ -31,8 +31,8 @@ export default function PosterCard({ movie, number, fluid }: Props) {
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
-          <div className="absolute inset-0 flex items-end bg-gradient-to-b from-[#2b2b2f] to-[#1a1a1d] p-3">
-            <span className="text-[13px] font-semibold leading-tight text-[var(--text-2)] line-clamp-4 text-left">
+          <div className="absolute inset-0 flex items-end bg-gradient-to-b from-[var(--surface-3)] to-[var(--surface)] p-3">
+            <span className="text-[13px] font-semibold leading-tight text-white/70 line-clamp-4 text-left">
               {movie.title}
             </span>
           </div>

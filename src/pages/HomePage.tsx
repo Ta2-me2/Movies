@@ -16,7 +16,7 @@ function EmptyLibrary() {
       </p>
       <button
         onClick={() => openForm()}
-        className="focus-ring mt-5 rounded-[7px] bg-white px-4 py-[6px] text-[13px] font-semibold text-black transition-opacity duration-150 hover:opacity-90"
+        className="btn-solid focus-ring mt-5 rounded-[7px] px-4 py-[6px] text-[13px] font-semibold transition-opacity duration-150 hover:opacity-90"
       >
         Add Your First Movie
       </button>

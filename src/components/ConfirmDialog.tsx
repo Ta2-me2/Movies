@@ -33,7 +33,7 @@ export default function ConfirmDialog({
   // portal into <body> so page/modal stacking contexts can't trap the dialog
   return createPortal(
     <div
-      className="anim-overlay fixed inset-0 z-[90] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      className="anim-overlay fixed inset-0 z-[90] flex items-center justify-center bg-[var(--scrim)] backdrop-blur-sm"
       onMouseDown={onCancel}
     >
       <div
@@ -46,7 +46,7 @@ export default function ConfirmDialog({
           <button
             onClick={onConfirm}
             className={`mat-control focus-ring w-full rounded-[7px] py-[6px] text-[13px] font-semibold transition-colors duration-150 hover:bg-[var(--fill-emphasis)] ${
-              destructive ? "text-[#ff453a]" : "text-[var(--text-1)]"
+              destructive ? "text-[var(--danger)]" : "text-[var(--text-1)]"
             }`}
           >
             {confirmLabel}

@@ -16,7 +16,7 @@ const buckets = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] as const;
 
 /* macOS pop-up button: quiet fill, hairline edge, chevron on the trailing side */
 const selectCls =
-  "mat-control focus-ring appearance-none rounded-[6px] py-[5px] pl-3 pr-7 text-[12px] font-medium text-[var(--text-1)] outline-none transition-colors duration-150 hover:bg-[var(--fill-emphasis)] bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%226%22%3E%3Cpath%20d%3D%22M1%201l4%204%204-4%22%20stroke%3D%22%23ffffff99%22%20stroke-width%3D%221.5%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_10px_center] bg-no-repeat";
+  "mat-control select-chevron focus-ring appearance-none rounded-[6px] py-[5px] pl-3 pr-7 text-[12px] font-medium text-[var(--text-1)] outline-none transition-colors duration-150 hover:bg-[var(--fill-emphasis)]";
 
 /* Segmented-control style rating filter: accent fill when on, quiet when off */
 const pill = (active: boolean) =>

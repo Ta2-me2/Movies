@@ -182,7 +182,7 @@ export default function MovieFormModal() {
 
   return (
     <div
-      className="anim-overlay fixed inset-0 z-[80] flex items-center justify-center bg-black/60 p-6 backdrop-blur-sm"
+      className="anim-overlay fixed inset-0 z-[80] flex items-center justify-center bg-[var(--scrim)] p-6 backdrop-blur-sm"
       onMouseDown={cleanupAndClose}
     >
       <div
@@ -212,7 +212,7 @@ export default function MovieFormModal() {
               placeholder="Movie title"
               className={field}
             />
-            {errors.title && <p className="mt-1 text-[12px] text-[#ff6961]">{errors.title}</p>}
+            {errors.title && <p className="mt-1 text-[12px] text-[var(--danger)]">{errors.title}</p>}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -225,7 +225,7 @@ export default function MovieFormModal() {
                 inputMode="numeric"
                 className={field}
               />
-              {errors.year && <p className="mt-1 text-[12px] text-[#ff6961]">{errors.year}</p>}
+              {errors.year && <p className="mt-1 text-[12px] text-[var(--danger)]">{errors.year}</p>}
             </div>
             <div>
               <label className={label}>My Rating (0.0–10.0) *</label>
@@ -237,7 +237,7 @@ export default function MovieFormModal() {
                 className={field}
               />
               {errors.rating && (
-                <p className="mt-1 text-[12px] text-[#ff6961]">{errors.rating}</p>
+                <p className="mt-1 text-[12px] text-[var(--danger)]">{errors.rating}</p>
               )}
             </div>
           </div>
@@ -388,7 +388,7 @@ export default function MovieFormModal() {
             />
           </div>
 
-          {errors.form && <p className="text-[13px] text-[#ff6961]">{errors.form}</p>}
+          {errors.form && <p className="text-[13px] text-[var(--danger)]">{errors.form}</p>}
         </div>
 
         <div className="flex justify-end gap-2 border-t border-[var(--hairline)] px-6 py-3.5">
@@ -401,7 +401,7 @@ export default function MovieFormModal() {
           <button
             onClick={save}
             disabled={saving}
-            className="focus-ring rounded-[7px] bg-white px-4 py-[6px] text-[13px] font-semibold text-black transition-opacity duration-150 hover:opacity-90 disabled:opacity-50"
+            className="btn-solid focus-ring rounded-[7px] px-4 py-[6px] text-[13px] font-semibold transition-opacity duration-150 hover:opacity-90 disabled:opacity-50"
           >
             {saving ? "Saving…" : "Save"}
           </button>

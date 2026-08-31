@@ -23,8 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local helper script with machine-specific paths
+# Local dev tooling
 dev-server.sh
+.claude
 
 # Source image for the app icon (generated icons are committed)
 icon-source.png
+icon-source-light.png

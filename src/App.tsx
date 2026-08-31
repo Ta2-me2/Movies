@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { HashRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-import { SidebarIcon } from "./components/Icons";
+import { GearIcon, SidebarIcon } from "./components/Icons";
 import MovieFormModal from "./components/MovieFormModal";
-import { inTauri } from "./lib/db";
+import { useSystemAccent } from "./lib/accent";
+import { openSettings } from "./lib/panels";
 import { PlaybackProvider } from "./lib/playback";
 import { LibraryProvider, useLibrary } from "./lib/store";
 import HomePage from "./pages/HomePage";
@@ -29,27 +30,6 @@ function Shortcuts() {
   return null;
 }
 
-/** Adopts the user's System Settings accent colour, as a native app would. */
-function SystemAccent() {
-  useEffect(() => {
-    if (!inTauri) return;
-    let cancelled = false;
-    (async () => {
-      const { invoke } = await import("@tauri-apps/api/core");
-      const rgb = await invoke<string | null>("accent_color");
-      if (!cancelled && rgb) {
-        document.documentElement.style.setProperty("--accent", `rgb(${rgb})`);
-      }
-    })().catch(() => {
-      // stylesheet keeps its systemBlue default
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-  return null;
-}
-
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -58,8 +38,13 @@ function ScrollToTop() {
   return null;
 }
 
+/** The circle AppKit puts beside the traffic lights, on its own material. */
+const COLLAPSED_CONTROL =
+  "mat-float flex size-[30px] items-center justify-center rounded-full text-[var(--text-1)]";
+
 function Shell() {
   const { ready, formState } = useLibrary();
+  useSystemAccent();
   // Collapsed state lives above the router, so it survives navigating into a
   // movie and back. It intentionally resets on relaunch.
   const [sidebarHidden, setSidebarHidden] = useState(false);
@@ -71,30 +56,41 @@ function Shell() {
   }, [sidebarHidden]);
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen text-[var(--text-1)]">
       <Shortcuts />
-      <SystemAccent />
       <ScrollToTop />
       {/* Drag strip along the top edge. It must sit *below* the sidebar and the
           collapse control, or it swallows clicks meant for them. */}
       <div data-tauri-drag-region className="fixed top-0 inset-x-0 h-7 z-[45]" />
 
-      {/* Once the sidebar is collapsed its control moves beside the traffic
-          lights and becomes a ringed circle — the same thing AppKit does. */}
-      <button
-        onClick={() => setSidebarHidden(false)}
-        aria-label="Show Sidebar"
-        aria-expanded={false}
+      {/* Once the sidebar is collapsed its controls move beside the traffic
+          lights and become ringed circles — the same thing AppKit does. They
+          keep the order they have inside the sidebar. */}
+      <div
         style={{
           opacity: sidebarHidden ? 1 : 0,
           transition: "opacity 260ms var(--ease-soft)",
         }}
-        className={`fixed left-[100px] top-[13px] z-[60] flex size-[30px] items-center justify-center rounded-full text-[var(--text-2)] shadow-[inset_0_0_0_0.5px_var(--hairline-strong)] hover:bg-[var(--fill)] hover:text-[var(--text-1)] ${
+        className={`fixed left-[100px] top-[13px] z-[60] flex items-center gap-2 ${
           sidebarHidden ? "" : "pointer-events-none"
         }`}
       >
-        <SidebarIcon width={17} height={17} strokeWidth={1.7} />
-      </button>
+        <button
+          onClick={() => void openSettings()}
+          aria-label="Settings"
+          className={COLLAPSED_CONTROL}
+        >
+          <GearIcon width={17} height={17} strokeWidth={1.7} />
+        </button>
+        <button
+          onClick={() => setSidebarHidden(false)}
+          aria-label="Show Sidebar"
+          aria-expanded={false}
+          className={COLLAPSED_CONTROL}
+        >
+          <SidebarIcon width={17} height={17} strokeWidth={1.7} />
+        </button>
+      </div>
 
       <Sidebar
         hidden={sidebarHidden}
