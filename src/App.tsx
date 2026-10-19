@@ -13,7 +13,7 @@ import SearchPage from "./pages/SearchPage";
 import MoviePage from "./pages/MoviePage";
 import CollectionPage from "./pages/CollectionPage";
 
-/** Cmd+F — переход к поиску и фокус строки поиска. */
+/** ⌘F — go to Search from anywhere and put the cursor in the field. */
 function Shortcuts() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -21,7 +21,7 @@ function Shortcuts() {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "f") {
         e.preventDefault();
         navigate("/search");
-        requestAnimationFrame(() => window.dispatchEvent(new Event("kinoteka:focus-search")));
+        requestAnimationFrame(() => window.dispatchEvent(new Event("movies:focus-search")));
       }
     };
     window.addEventListener("keydown", handler);

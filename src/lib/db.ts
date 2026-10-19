@@ -6,8 +6,8 @@ export const inTauri = isTauri();
 
 // ---------------------------------------------------------------------------
 // Tauri: SQLite via tauri-plugin-sql. Posters and trailers are copied into the
-// library folder (~/Library/Application Support/Movie); a movie file is only
-// referenced where it already lives, since those run to many gigabytes.
+// library folder (~/Library/Application Support/Movies/<library>); a movie file
+// is only referenced where it already lives, since those run to many gigabytes.
 // Browser (debug via `npm run dev` only): localStorage.
 // ---------------------------------------------------------------------------
 
@@ -293,8 +293,8 @@ async function deleteMediaFile(command: string, fileName: string): Promise<void>
 
 // --------------- Browser fallback (not used in the .app) --------------------
 
-const LS_MOVIES = "kinoteka.movies";
-const LS_GENRES = "kinoteka.genres";
+const LS_MOVIES = "movies.library";
+const LS_GENRES = "movies.genres";
 
 function memoryRead(): Movie[] {
   try {

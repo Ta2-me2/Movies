@@ -11,8 +11,8 @@ export default function SearchPage() {
   useEffect(() => {
     inputRef.current?.focus();
     const focus = () => inputRef.current?.focus();
-    window.addEventListener("kinoteka:focus-search", focus);
-    return () => window.removeEventListener("kinoteka:focus-search", focus);
+    window.addEventListener("movies:focus-search", focus);
+    return () => window.removeEventListener("movies:focus-search", focus);
   }, []);
 
   const q = query.trim().toLocaleLowerCase();

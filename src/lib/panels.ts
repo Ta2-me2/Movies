@@ -17,7 +17,7 @@ export const APP_NAME = "Movies";
 export const APP_TAGLINE =
   "A personal movie library for macOS. Your films, your ratings — kept on your own machine.";
 
-export const AUTHOR_NAME = "Ta2";
+export const AUTHOR_NAME = "Daniil Lavrov";
 
 /** The repository, written the way a link is read rather than typed. */
 export const REPO_LABEL = REPO_URL.replace(/^https?:\/\//, "");

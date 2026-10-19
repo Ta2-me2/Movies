@@ -171,7 +171,7 @@ Use `npm run release` for anything you intend to publish. It runs the normal bui
 ---
 
 <div align="center">
-  Made with care by <a href="https://github.com/Ta2-me2">Ta2</a>
+  Made with care by <a href="https://github.com/Ta2-me2">Daniil Lavrov</a>
 
   MIT License — see <a href="LICENSE">LICENSE</a>.
 </div>
