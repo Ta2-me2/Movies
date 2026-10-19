@@ -115,7 +115,7 @@ Posters and trailers are copied into the library, so they keep working if you de
 
 ## Installation
 
-1. Download `Movies_1.1.0_aarch64.dmg` from the [latest release](https://github.com/Ta2-me2/Movies/releases/latest).
+1. Download `Movies_1.1.1_aarch64.dmg` from the [latest release](https://github.com/Ta2-me2/Movies/releases/latest).
 2. Open the disk image and drag **Movies** to **Applications**.
 3. Open Terminal and run:
 
